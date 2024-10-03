@@ -1,0 +1,9 @@
+buenas noches docente, en esta oportunidad le presento mi trabajo en el cual esta esplicado el logeo y 
+que pasa cuando inicias sesion, adicional a esto en caso pongas mal la contraseña te saltara un aviso 
+de contraseña incorrecta,ademas para la simulacion de error de servidor realize un else en la parte de 
+usuarios con el fin de generar ese error el cual te mandara un aviso.
+adicional a lo que solicito agregue unas vistas para cuando el doctor se logee las cuales no estan 
+funcionando aun pero pronto les dare su incio
+
+Usuario de acceso: doctor  contraseña:12345
+Usuario de error de servidor: doctor2 contraseña:12345
