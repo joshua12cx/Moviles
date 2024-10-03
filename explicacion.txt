@@ -1,4 +1,4 @@
-buenas noches docente, en esta oportunidad le presento mi trabajo en el cual esta esplicado el logeo y 
+buenas noches docente, en esta oportunidad le presento mi trabajo en el cual esta explicado el logeo y 
 que pasa cuando inicias sesion, adicional a esto en caso pongas mal la contraseña te saltara un aviso 
 de contraseña incorrecta,ademas para la simulacion de error de servidor realize un else en la parte de 
 usuarios con el fin de generar ese error el cual te mandara un aviso.
