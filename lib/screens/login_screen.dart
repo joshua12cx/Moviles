@@ -6,10 +6,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  bool _rememberMe = false;
 
   void _login() async {
     if (_formKey.currentState!.validate()) {
@@ -17,20 +18,11 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = true;
       });
 
-      // Simulación de llamada a la API
-      await Future.delayed(Duration(seconds: 2)); // Simula la llamada al servidor
+      await Future.delayed(Duration(seconds: 2)); 
 
-      // Simula las credenciales correctas
-      if (_usernameController.text == 'doctor' &&
-          _passwordController.text == '12345') {
+      if (_emailController.text == 'doctor' && _passwordController.text == '12345') {
         Navigator.pushReplacementNamed(context, '/home');
-      }
-      // Si el usuario es 'doctor2', simulamos un error de servidor
-      else if (_usernameController.text == 'doctor2') {
-        _showServerErrorDialog();
-      }
-      // Si las credenciales no son válidas
-      else {
+      } else {
         _showErrorDialog('Credenciales incorrectas. Inténtalo de nuevo.');
       }
 
@@ -58,79 +50,189 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _showServerErrorDialog() {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Problema con el servidor'),
-        content: Text('No se pudo conectar al servidor. Por favor, intenta más tarde.'),
-        actions: <Widget>[
-          ElevatedButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Iniciar sesión'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              // Ícono de usuario en la parte superior
-              Icon(
-                Icons.person,
-                size: 100,
-                color: Colors.blueGrey,
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Usuario',
-                  prefixIcon: Icon(Icons.person), // Ícono dentro del campo de texto
+      backgroundColor: Color(0xFFF5F1FF), // Fondo lila claro
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 60), // Espacio superior
+                CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.grey[300],
+                  child: Icon(Icons.account_circle, size: 100, color: Colors.white),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor ingrese el usuario';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 10),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Contraseña',
-                  prefixIcon: Icon(Icons.lock), // Ícono dentro del campo de contraseña
+                SizedBox(height: 20),
+                Text(
+                  'Welcome to Rosales Dental',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
                 ),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor ingrese la contraseña';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              _isLoading
-                  ? CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _login,
-                      child: Text('Iniciar sesión'),
+                SizedBox(height: 10),
+                Text(
+                  'Please enter your details to login.',
+                  style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                ),
+                SizedBox(height: 30),
+
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Email:',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(height: 5),
+
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    hintText: 'Type your email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-            ],
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese su correo electrónico';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 15),
+
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Password:',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(height: 5),
+
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    hintText: 'Type your password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese su contraseña';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 10),
+
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _rememberMe,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _rememberMe = value!;
+                        });
+                      },
+                    ),
+                    Text('Remember me?'),
+                    Spacer(),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text('Forget your password or email?'),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15),
+
+                _isLoading
+                    ? CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: _login,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFFD9CFFF), // Color lila claro para el botón
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          minimumSize: Size(double.infinity, 50),
+                        ),
+                        child: Text('Login'),
+                      ),
+                SizedBox(height: 20),
+
+                Row(
+                  children: <Widget>[
+                    Expanded(child: Divider(thickness: 1)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text("Or sign in with"),
+                    ),
+                    Expanded(child: Divider(thickness: 1)),
+                  ],
+                ),
+                SizedBox(height: 20),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Lógica para iniciar sesión con Google
+                      },
+                      icon: Icon(Icons.g_mobiledata),
+                      label: Text('Google'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
+                        side: BorderSide(color: Colors.grey),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        minimumSize: Size(150, 50),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Lógica para iniciar sesión con Microsoft
+                      },
+                      icon: Icon(Icons.window),
+                      label: Text('Microsoft'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
+                        side: BorderSide(color: Colors.grey),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        minimumSize: Size(150, 50),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+
+                TextButton(
+                  onPressed: () {
+                    // Navegar a la pantalla de registro
+                  },
+                  child: Text("Don't have an account? Register now"),
+                ),
+                SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

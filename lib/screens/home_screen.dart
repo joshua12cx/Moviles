@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inicio'),
+        title: const Text('Inicio'),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            UserAccountsDrawerHeader(
+            const UserAccountsDrawerHeader(
               accountName: Text('Dr. Rosales'),
               accountEmail: Text('dr.rosales@consultorio.com'),
               currentAccountPicture: CircleAvatar(
@@ -20,44 +22,45 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Inicio'),
+              leading: const Icon(Icons.home),
+              title: const Text('Inicio'),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Paciente'),
+              leading: const Icon(Icons.person),
+              title: const Text('Paciente'),
               onTap: () {
-                // página de Paciente
+                Navigator.pushNamed(context, '/pacientes'); // Navega a la pantalla de Pacientes
               },
             ),
             ListTile(
-              leading: Icon(Icons.calendar_today),
-              title: Text('Citas'),
+              leading: const Icon(Icons.calendar_today),
+              title: const Text('Citas'),
               onTap: () {
-                //página de Citas
+                // Navegar a la página de Citas
               },
             ),
             ListTile(
-              leading: Icon(Icons.payment),
-              title: Text('Pagos'),
+              leading: const Icon(Icons.payment),
+              title: const Text('Pagos'),
               onTap: () {
                 // Navegar a la página de Pagos
               },
             ),
             ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Cerrar sesión'),
+              leading: const Icon(Icons.logout),
+              title: const Text('Cerrar sesión'),
               onTap: () {
                 // Manejar el cierre de sesión
+                Navigator.pushReplacementNamed(context, '/login'); // Redirige a la pantalla de inicio de sesión
               },
             ),
           ],
         ),
       ),
-      body: Center(child: Text('Bienvenido al consultorio odontológico')),
+      body: const Center(child: Text('Bienvenido al consultorio odontológico')),
     );
   }
 }
