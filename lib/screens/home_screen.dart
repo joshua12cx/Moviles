@@ -14,8 +14,8 @@ class HomeScreen extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: <Widget>[
             const UserAccountsDrawerHeader(
-              accountName: Text('Dr. Rosales'),
-              accountEmail: Text('dr.rosales@consultorio.com'),
+              accountName: Text('Ramiro Paredes'),
+              accountEmail: Text('ramiro@gmail.com'),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Icon(Icons.person, size: 50, color: Colors.blue),
@@ -26,13 +26,6 @@ class HomeScreen extends StatelessWidget {
               title: const Text('Inicio'),
               onTap: () {
                 Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Paciente'),
-              onTap: () {
-                Navigator.pushNamed(context, '/pacientes'); // Navega a la pantalla de Pacientes
               },
             ),
             ListTile(
@@ -54,7 +47,8 @@ class HomeScreen extends StatelessWidget {
               title: const Text('Cerrar sesión'),
               onTap: () {
                 // Manejar el cierre de sesión
-                Navigator.pushReplacementNamed(context, '/login'); // Redirige a la pantalla de inicio de sesión
+                Navigator.pushReplacementNamed(context,
+                    '/login'); // Redirige a la pantalla de inicio de sesión
               },
             ),
           ],
